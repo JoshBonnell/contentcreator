@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import uuid from "react-uuid";
+import CustomGridItem from "./CustomGridItem";
+import FlipCard from "./FlipCard";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const MyGridLayout = (props) => {
+  // TODO: items and layouts should be separate things
+  // Adding and removing should be done on items
+  // and layout should be updated using onLayoutChange like in example 6
+
   const originalLayouts = getFromLS("layouts") || { lg: [], md: [], sm: [] };
   const [layouts, setLayouts] = useState(
     JSON.parse(JSON.stringify(originalLayouts))
@@ -15,9 +21,8 @@ const MyGridLayout = (props) => {
   });
   const [currentBreakpoint, setCurrentBreakpoint] = useState("lg");
   const [cols] = useState({ lg: 12, md: 6, sm: 1 });
-  // const [layout, setLayout] = useState([]);
 
-  const onDrop = (newLayout, layoutItem, _event) => {
+  const onDrop = (newLayout, layoutItem, e) => {
     layoutItem = {
       x: layoutItem.x,
       y: layoutItem.y,
@@ -25,6 +30,15 @@ const MyGridLayout = (props) => {
       w: layoutItem.w,
       i: uuid(),
     };
+
+    let { component } = JSON.parse(e.dataTransfer.getData("dragData"));
+    console.log(component);
+    if (component === "FlipCard") {
+      layoutItem.minW = 2;
+      layoutItem.minH = 2;
+      layoutItem.h = 2;
+      layoutItem.w = 2;
+    }
 
     newLayout[newLayout.length - 1] = layoutItem;
 
@@ -41,14 +55,32 @@ const MyGridLayout = (props) => {
     saveToLS("layouts", allLayouts);
   };
 
-  function renderGrid() {
-    console.log(layouts);
-    console.log(currentBreakpoint);
-    return layouts[currentBreakpoint].map(function (l) {
+  const onRemoveItem = (item) => {
+    const newLayout = layouts[currentBreakpoint].filter(
+      (el) => el.i !== item.i
+    );
+
+    setLayouts({ ...layouts, [currentBreakpoint]: newLayout });
+    saveToLS("layouts", layouts);
+  };
+
+  function renderGridItems() {
+    return layouts[currentBreakpoint].map(function (l, i) {
       return (
-        <div key={l.i} /*data-grid={l}*/ className={l.static ? "static" : ""}>
-          <span className="text">asdf</span>
-        </div>
+        <CustomGridItem key={l.i}>
+          <FlipCard />
+          <span
+            onClick={() => onRemoveItem(l)}
+            style={{
+              position: "absolute",
+              top: "0%",
+              right: "2%",
+              cursor: "pointer",
+            }}
+          >
+            x
+          </span>
+        </CustomGridItem>
       );
     });
   }
@@ -95,7 +127,7 @@ const MyGridLayout = (props) => {
       // measureBeforeMount={true}
       // transformScale={1}
     >
-      {renderGrid()}
+      {renderGridItems()}
     </ResponsiveGridLayout>
   );
 };

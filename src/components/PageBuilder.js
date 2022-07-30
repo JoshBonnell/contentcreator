@@ -17,7 +17,12 @@ const PageBuilder = () => {
           // Firefox requires some kind of initialization
           // which we can do by adding this attribute
           // @see https://bugzilla.mozilla.org/show_bug.cgi?id=568313
-          onDragStart={(e) => e.dataTransfer.setData("text/plain", "")}
+          onDragStart={(e) =>
+            e.dataTransfer.setData(
+              "dragData",
+              JSON.stringify({ component: "FlipCard" })
+            )
+          }
         >
           Droppable Element (Drag me!)
         </div>
