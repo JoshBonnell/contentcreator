@@ -4,25 +4,46 @@
 
 .pb-root {
   display: grid;
-  grid-template-rows: 1fr 200px;
+  grid-template-rows: auto 1fr auto;
   height: 100vh;
 }
 
 .pb-root .pb-main {
-  padding: 25px;
-  background-color: #f1f1f1;
+  background-color: #fafafa;
   overflow: auto;
+}
+
+.pb-main {
+  padding: 15px 25px 25px 25px;
+}
+
+.pb-topbar {
+  position: sticky;
+  background-color: #fafafa;
+  padding: 10px 25px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .pb-root .pb-context-menu {
   border-top: 1px solid #d0d0d0;
 }
 
+.pb-context-menu {
+  padding: 10px;
+}
+
+.pb-context-menu .pb-option {
+  border: none;
+  background: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  height: 100px;
+  width: 100px;
+}
+
 .grid-wrapper {
-  width: 100%;
   height: 100%;
-  overflow: scroll;
-  /* box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1); */
+  margin: 0 auto;
 }
 
 .layoutJSON {
@@ -121,7 +142,7 @@
   position: relative;
   transition: height 200ms ease;
   background: #fff;
-  width: 100%;
+  /* width: 100%; */
   min-width: 320px;
 
   /* Might want to revisit later */
@@ -293,4 +314,69 @@
   transform: rotateY(180deg);
   overflow: auto;
   padding: 10px;
+}
+
+/* .test-parent {
+  background: #d1d1d1;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: repeat(3, auto);
+  grid-gap: 5px;
+} */
+
+/* .test-child {
+  background: cornflowerblue;
+}
+
+.row {
+  --modifier: calc((30rem - 100%) * 999);
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.item {
+  flex-basis: max(var(--modifier), 0px);
+  aspect-ratio: var(--ratio);
+  flex-grow: calc(var(--ratio));
+}
+
+.item img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.row {
+  max-width: 90rem;
+  border: 1px dashed rgb(255 255 255 / 0.4);
+  margin-inline: auto;
+  padding: 0.5rem;
+} */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  margin: 0 auto;
+  transform-origin: top;
+}
+
+@media screen and (min-width: 0px) {
+  .grid {
+    max-width: 480px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .grid {
+    max-width: 960px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .grid {
+    max-width: 1280px;
+  }
 }

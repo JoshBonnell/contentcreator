@@ -1,74 +1,61 @@
-import React, { useState } from "react";
-import { Responsive, WidthProvider } from "react-grid-layout";
+import React, { useState, useCallback } from "react";
+import RGL, { WidthProvider } from "react-grid-layout";
 import uuid from "react-uuid";
 import CustomGridItem from "./CustomGridItem";
 import FlipCard from "./FlipCard";
-const ResponsiveGridLayout = WidthProvider(Responsive);
+const ReactGridLayout = WidthProvider(RGL);
 
 const MyGridLayout = (props) => {
   // TODO: items and layouts should be separate things
   // Adding and removing should be done on items
   // and layout should be updated using onLayoutChange like in example 6
 
-  const originalLayouts = getFromLS("layouts") || { lg: [], md: [], sm: [] };
-  const [layouts, setLayouts] = useState(
-    JSON.parse(JSON.stringify(originalLayouts))
+  const [gridWidth, setGridWidth] = useState(1200);
+  const [cols] = useState(12);
+  // Each cell should be a square, so it's container width / number of columns,
+  // adjusting for default margin of 10px between each column
+  const [rowHeight, setRowHeight] = useState(
+    (gridWidth - (cols + 1) * 10) / cols
   );
-  const [breakpoints] = useState({
-    lg: 769,
-    md: 481,
-    sm: 0,
-  });
-  const [currentBreakpoint, setCurrentBreakpoint] = useState("lg");
-  const [cols] = useState({ lg: 12, md: 6, sm: 1 });
+  const originalLayout = getFromLS("layout") || [];
+  const [layout, setLayout] = useState(originalLayout);
 
   const onDrop = (newLayout, layoutItem, e) => {
     layoutItem = {
       x: layoutItem.x,
       y: layoutItem.y,
-      h: layoutItem.h,
-      w: layoutItem.w,
+      h: 1,
+      w: 1,
       i: uuid(),
     };
 
     let { component } = JSON.parse(e.dataTransfer.getData("dragData"));
-    console.log(component);
-    if (component === "FlipCard") {
-      layoutItem.minW = 2;
-      layoutItem.minH = 2;
-      layoutItem.h = 2;
-      layoutItem.w = 2;
-    }
+    // if (component === "FlipCard") {
+    //   layoutItem.minW = 1;
+    //   layoutItem.minH = 1;
+    //   layoutItem.h = 2;
+    //   layoutItem.w = 2;
+    // }
 
     newLayout[newLayout.length - 1] = layoutItem;
 
-    setLayouts({ ...layouts, [currentBreakpoint]: newLayout });
-    saveToLS("layouts", layouts);
-  };
-
-  const onBreakpointChange = (newBreakpoint, newCols) => {
-    setCurrentBreakpoint(newBreakpoint);
-  };
-
-  const onLayoutChange = (currentLayout, allLayouts) => {
-    setLayouts(allLayouts);
-    saveToLS("layouts", allLayouts);
+    setLayout(newLayout);
+    saveToLS("layout", layout);
   };
 
   const onRemoveItem = (item) => {
-    const newLayout = layouts[currentBreakpoint].filter(
-      (el) => el.i !== item.i
-    );
+    const newLayout = layout.filter((el) => el.i !== item.i);
 
-    setLayouts({ ...layouts, [currentBreakpoint]: newLayout });
-    saveToLS("layouts", layouts);
+    setLayout(newLayout);
+    saveToLS("layout", layout);
   };
 
   function renderGridItems() {
-    return layouts[currentBreakpoint].map(function (l, i) {
+    return layout.map(function (l, i) {
       return (
         <CustomGridItem key={l.i}>
-          <FlipCard />
+          {/* <FlipCard /> */}
+          <div></div>
           <span
             onClick={() => onRemoveItem(l)}
             style={{
@@ -108,27 +95,39 @@ const MyGridLayout = (props) => {
     }
   }
 
+  //resize with preserving aspect ratio
+  const onResize = useCallback((l, oldLayoutItem, layoutItem, placeholder) => {
+    const heightDiff = layoutItem.h - oldLayoutItem.h;
+    const widthDiff = layoutItem.w - oldLayoutItem.w;
+    const changeCoef = oldLayoutItem.w / oldLayoutItem.h;
+    if (Math.abs(heightDiff) < Math.abs(widthDiff)) {
+      layoutItem.h = layoutItem.w / changeCoef;
+      placeholder.h = layoutItem.w / changeCoef;
+    } else {
+      layoutItem.w = layoutItem.h * changeCoef;
+      placeholder.w = layoutItem.h * changeCoef;
+    }
+  }, []);
+
   return (
-    <ResponsiveGridLayout
-      {...props}
-      layouts={layouts}
-      breakpoints={breakpoints}
-      onBreakpointChange={onBreakpointChange}
-      onLayoutChange={onLayoutChange}
-      cols={cols}
-      onDrop={onDrop}
-      preventCollision={false}
-      isDroppable={true}
-      compactType={null}
-      className="layout"
-      rowHeight={60}
-      autoSize={true}
-      isBounded={true}
-      // measureBeforeMount={true}
-      // transformScale={1}
-    >
-      {renderGridItems()}
-    </ResponsiveGridLayout>
+    <div className="grid-wrapper" style={{ width: gridWidth }}>
+      <ReactGridLayout
+        layout={layout}
+        cols={cols}
+        rowHeight={rowHeight}
+        onDrop={onDrop}
+        preventCollision={false}
+        isDroppable={true}
+        compactType={"vertical"}
+        className="layout"
+        autoSize={true}
+        isBounded={true}
+        onResize={onResize}
+        // transformScale={1}
+      >
+        {renderGridItems()}
+      </ReactGridLayout>
+    </div>
   );
 };
 

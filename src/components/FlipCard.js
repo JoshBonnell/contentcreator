@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 
 const FlipCard = () => {
+  const [imgUri, setImgUri] = useState(
+    "https://source.unsplash.com/random/720x405"
+  );
   return (
     <div className="flip-card">
       <div className="flip-card-inner">
-        <div className="flip-card-front">
+        <div className="flip-card-front" style={{ padding: 10 }}>
           <img
-            style={{ width: "100%", height: "100%" }}
-            src="https://images.unsplash.com/photo-1597589827317-4c6d6e0a90bd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&h=500&q=80"
+            style={{ width: "720px", height: "auto" }}
+            src={imgUri}
             alt="Avatar"
           />
         </div>
