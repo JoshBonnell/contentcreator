@@ -4,7 +4,7 @@
 
 .pb-root {
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-columns: auto 1fr;
   height: 100vh;
 }
 
@@ -14,36 +14,58 @@
 }
 
 .pb-main {
-  padding: 15px 25px 25px 25px;
+  padding: 1rem 2rem 2rem 2rem;
+}
+
+.pb-sidebar {
+  min-width: 15rem;
+  background: #343536;
+  padding: 1rem;
 }
 
 .pb-topbar {
   position: sticky;
-  background-color: #fafafa;
-  padding: 10px 25px;
   display: flex;
   justify-content: flex-end;
-}
-
-.pb-root .pb-context-menu {
-  border-top: 1px solid #d0d0d0;
+  margin-bottom: 1rem;
 }
 
 .pb-context-menu {
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .pb-context-menu .pb-option {
   border: none;
-  background: white;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  height: 100px;
-  width: 100px;
+  background: #d7d7d7;
+  color: #232323;
+  width: 100%;
+  margin-bottom: 10px;
+  height: 2.8rem;
+  font-size: 1rem;
 }
 
-.grid-wrapper {
-  height: 100%;
-  margin: 0 auto;
+@media screen and (max-width: 800px) {
+  .pb-root {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+  }
+
+  .pb-main {
+    order: -1;
+  }
+
+  .pb-context-menu {
+    display: inline-grid;
+    grid-auto-flow: column;
+    grid-gap: 1rem;
+  }
+
+  .pb-context-menu .pb-option {
+    margin-bottom: 0;
+    padding: 0 1rem;
+  }
 }
 
 .layoutJSON {
@@ -315,6 +337,11 @@
   overflow: auto;
 }
 
+.grid-wrapper {
+  height: 100%;
+  margin: 0 auto;
+}
+
 .grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -326,19 +353,22 @@
 }
 
 @media screen and (min-width: 0px) {
-  .grid {
+  .grid,
+  .grid-wrapper {
     max-width: 480px;
   }
 }
 
 @media screen and (min-width: 600px) {
-  .grid {
+  .grid,
+  .grid-wrapper {
     max-width: 960px;
   }
 }
 
 @media screen and (min-width: 1024px) {
-  .grid {
+  .grid,
+  .grid-wrapper {
     max-width: 1280px;
   }
 }
@@ -357,4 +387,33 @@
 
 .image-component {
   display: flex;
+}
+
+#transform-scale {
+  display: flex;
+  align-items: center;
+  width: 200px;
+  border: 1px solid #d1d1d1;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 15px;
+  background: #343536;
+  color: white;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.undefined-element {
+  background: #ffc107;
+  color: #343a40;
+  font-weight: bold;
+  text-align: center;
+  padding: 1rem;
+  border-style: dashed;
+  border-width: 3px;
 }

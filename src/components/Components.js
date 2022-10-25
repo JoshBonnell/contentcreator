@@ -67,7 +67,7 @@ export default (item) => {
 
   return React.createElement(
     () => (
-      <div style={{ background: "red" }}>
+      <div className="undefined-element">
         The component '{item.component}' has not been created yet.
       </div>
     ),

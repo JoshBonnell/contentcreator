@@ -4,7 +4,22 @@ const TransformScale = (props) => {
   const defaultScale = 100;
   const [scale, setScale] = useState(props.scale || defaultScale);
   const scales = [
-    25, 33, 50, 67, 75, 80, 90, 100, 110, 125, 150, 175, 200, 250, 300, 400,
+    25,
+    33,
+    50,
+    67,
+    75,
+    80,
+    90,
+    100,
+    110,
+    125,
+    150,
+    175,
+    200,
+    250,
+    300,
+    400,
     500,
   ];
 
@@ -35,17 +50,7 @@ const TransformScale = (props) => {
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        width: 200,
-        border: "1px solid #d1d1d1",
-        padding: "5px 10px",
-        borderRadius: "4px",
-        fontSize: 15,
-      }}
-    >
+    <div id="transform-scale">
       <div style={{ flex: 1 }}>{scale}%</div>
       <div
         onClick={handleDecrement}
@@ -66,6 +71,7 @@ const TransformScale = (props) => {
           border: "1px solid #bbb",
           borderRadius: "4px",
           cursor: "pointer",
+          color: "white",
         }}
       >
         Reset
