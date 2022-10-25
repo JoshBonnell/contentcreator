@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 const FlipCard = (props) => {
-
-  const items = props.items.map(item => {
-    return React.createElement(item.)
-  })
+  // const items = props.items.map(item => {
+  //   return React.createElement(item.)
+  // })
 
   return (
     <div className="flip-card-container">

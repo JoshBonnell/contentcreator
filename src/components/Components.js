@@ -26,15 +26,14 @@ const getProps = (item) => {
   };
 
   for (const [key, value] of Object.entries(item.props)) {
-    console.log(key, value);
     const isChildComponent =
       value !== null &&
       typeof value === "object" &&
       value.hasOwnProperty("component");
 
-    const isArrayOfChildComponents = value !== null &&
-    typeof value === "array" &&
-    value.some((item) => )
+    // const isArrayOfChildComponents = value !== null &&
+    // typeof value === "array" &&
+    // value.some((item) => )
 
     if (isChildComponent) {
       // TODO: make sure its children are valid children (maybe put this in getProps)
@@ -59,12 +58,19 @@ const getProps = (item) => {
 };
 
 export default (item) => {
-  if (typeof Components[item.component].type !== "undefined") {
+  if (
+    Components[item.component] &&
+    typeof Components[item.component].type !== "undefined"
+  ) {
     return React.createElement(Components[item.component].type, getProps(item));
   }
 
   return React.createElement(
-    () => <div>The component {item.component} has not been created yet.</div>,
+    () => (
+      <div style={{ background: "red" }}>
+        The component '{item.component}' has not been created yet.
+      </div>
+    ),
     { key: item._uid }
   );
 };

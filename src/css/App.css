@@ -9,7 +9,7 @@
 }
 
 .pb-root .pb-main {
-  background-color: #fafafa;
+  background-color: #ebecf0;
   overflow: auto;
 }
 
@@ -321,8 +321,8 @@
   grid-gap: 10px;
   margin: 0 auto;
   transform-origin: top;
-  border: 1px solid lightslategray;
   padding: 5px;
+  background: #fff;
 }
 
 @media screen and (min-width: 0px) {
