@@ -2,10 +2,53 @@ import React from "react";
 import ColumnLayout from "./ColumnLayout";
 import FlipCard from "./FlipCard";
 import Image from "./Image";
+import Header from "./Header";
+import UndefinedElement from "./UndefinedElement";
 
-const Components = {
+export const Blah = {
+  header: {
+    type: Header,
+    defaults: {
+      props: {
+        text: "My Header",
+      },
+    },
+  },
   image: {
     type: Image,
+    defaults: {
+      props: {
+        src: `https://source.unsplash.com/random/150x150?t=1234`,
+        alt: "Alt Text",
+      },
+    },
+  },
+  flipcard: {
+    type: FlipCard,
+    validChildComponents: [Image],
+  },
+  columnlayout: {
+    type: ColumnLayout,
+  },
+};
+
+const Components = {
+  header: {
+    type: Header,
+    defaults: {
+      props: {
+        text: "My Header",
+      },
+    },
+  },
+  image: {
+    type: Image,
+    defaults: {
+      props: {
+        src: `https://source.unsplash.com/random/150x150?t=1234`,
+        alt: "Alt Text",
+      },
+    },
   },
   flipcard: {
     type: FlipCard,
@@ -66,11 +109,7 @@ export default (item) => {
   }
 
   return React.createElement(
-    () => (
-      <div className="undefined-element">
-        The component '{item.component}' has not been created yet.
-      </div>
-    ),
+    () => <UndefinedElement element={item.component} />,
     { key: item._uid }
   );
 };

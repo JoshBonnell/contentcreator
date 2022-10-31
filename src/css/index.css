@@ -88,3 +88,7 @@ button {
     scroll-behavior: auto !important;
   }
 }
+
+#root {
+  min-height: inherit;
+}

@@ -1,18 +1,20 @@
-import "./css/App.css";
 import React from "react";
-import PageBuilder from "./components/PageBuilder";
+import Builder from "./components/Builder";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { fab } from "@fortawesome/free-brands-svg-icons";
-import { faImage } from "@fortawesome/free-solid-svg-icons";
+import {
+  faImage,
+  faHeading,
+  faTriangleExclamation,
+} from "@fortawesome/free-solid-svg-icons";
 
-library.add(fab, faImage);
+library.add(faImage, faHeading, faTriangleExclamation);
 
 function App() {
   return (
     <DndProvider backend={HTML5Backend}>
-      <PageBuilder />
+      <Builder />
     </DndProvider>
   );
 }

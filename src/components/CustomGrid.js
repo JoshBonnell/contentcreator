@@ -1,32 +1,38 @@
 import React, { useState } from "react";
-import DraggableComponent from "./DraggableComponent";
-import TransformScale from "./TransformScale";
+import DroppableElement from "./DroppableElement";
+import Components, { Blah } from "./Components";
+import uuid from "react-uuid";
 
-import Components from "./Components";
+const CustomGrid = React.forwardRef(({ items, setItems }, ref) => {
+  const handleDrop = (insertType, dropTargetId, position) => {
+    let dropTargetIndex = items.map((i) => i._uid).indexOf(dropTargetId);
+    if (dropTargetIndex !== -1) {
+      if (position === "bottom") {
+        dropTargetIndex += 1;
+      }
 
-const CustomGrid = React.forwardRef(({ items }, ref) => {
-  const [scale, setScale] = useState(1);
-
-  const onScaleChange = (scale) => {
-    setScale(scale / 100);
+      const newItems = [...items];
+      newItems.splice(dropTargetIndex, 0, {
+        _uid: uuid(),
+        component: insertType,
+        props: Blah[insertType].defaults.props,
+      });
+      setItems(newItems);
+    }
   };
+
   return (
     <div className="grid-wrapper" ref={ref}>
-      <div className="pb-topbar">
-        <TransformScale onScaleChange={onScaleChange} />
-      </div>
-      <div
-        className="grid"
-        style={{
-          transform: `scale(${scale})`,
-          transformOrigin: scale > 1 ? "left top" : "center top",
-        }}
-      >
+      <div className="grid">
         {items.map((item) => {
           return (
-            <DraggableComponent key={item._uid}>
+            <DroppableElement
+              key={item._uid}
+              _uid={item._uid}
+              onDrop={handleDrop}
+            >
               <div className="grid-item">{Components(item)}</div>
-            </DraggableComponent>
+            </DroppableElement>
           );
         })}
       </div>

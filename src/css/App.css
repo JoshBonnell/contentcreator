@@ -1,79 +1,71 @@
-#root {
-  min-height: inherit;
-}
+/* Builder, Builder sections */
 
-.pb-root {
+.builder {
   display: grid;
   grid-template-columns: auto 1fr;
   height: 100vh;
 }
 
-.pb-root .pb-main {
+.builder .main {
   background-color: #ebecf0;
   overflow: auto;
-}
-
-.pb-main {
   padding: 1rem 2rem 2rem 2rem;
 }
 
-.pb-sidebar {
+.builder .sidebar {
   min-width: 15rem;
   background: #343536;
   padding: 1rem;
 }
 
-.pb-topbar {
+.builder .main .topbar {
   position: sticky;
   display: flex;
   justify-content: flex-end;
   margin-bottom: 1rem;
 }
 
-.pb-context-menu {
+.builder-elements-menu {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.pb-context-menu .pb-option {
+.builder-elements-menu .element-wrapper {
+  margin-bottom: 0.6rem;
+}
+
+.builder-elements-menu .element {
   border: none;
   background: #d7d7d7;
   color: #232323;
   width: 100%;
-  margin-bottom: 10px;
   height: 2.8rem;
   font-size: 1rem;
 }
 
 @media screen and (max-width: 800px) {
-  .pb-root {
+  .builder {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
   }
 
-  .pb-main {
+  .main {
     order: -1;
   }
 
-  .pb-context-menu {
+  .builder-elements-menu {
     display: inline-grid;
     grid-auto-flow: column;
     grid-gap: 1rem;
   }
 
-  .pb-context-menu .pb-option {
+  .builder-elements-menu .element {
     margin-bottom: 0;
     padding: 0 1rem;
   }
 }
 
-.layoutJSON {
-  background: #ddd;
-  border: 1px solid black;
-  margin-top: 10px;
-  padding: 10px;
-}
 .columns {
   -moz-columns: 120px;
   -webkit-columns: 120px;
@@ -416,4 +408,8 @@
   padding: 1rem;
   border-style: dashed;
   border-width: 3px;
+}
+
+.undefined-element .message {
+  margin: 0 0.5rem;
 }
