@@ -1,7 +1,7 @@
 import React from "react";
 import DraggableElement from "./DraggableElement";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Blah } from "./Components";
+import { ComponentsList } from "./ComponentFactory";
 import uuid from "react-uuid";
 import "../css/App.css";
 

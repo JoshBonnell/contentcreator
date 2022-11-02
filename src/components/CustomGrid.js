@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DroppableElement from "./DroppableElement";
-import Components, { Blah } from "./Components";
+import { Components, constructComponent } from "./ComponentFactory";
 import uuid from "react-uuid";
 
 const CustomGrid = React.forwardRef(({ items, setItems }, ref) => {
@@ -15,7 +15,7 @@ const CustomGrid = React.forwardRef(({ items, setItems }, ref) => {
       newItems.splice(dropTargetIndex, 0, {
         _uid: uuid(),
         component: insertType,
-        props: Blah[insertType].defaults.props,
+        props: Components[insertType].defaults.props,
       });
       setItems(newItems);
     }
@@ -31,7 +31,7 @@ const CustomGrid = React.forwardRef(({ items, setItems }, ref) => {
               _uid={item._uid}
               onDrop={handleDrop}
             >
-              <div className="grid-item">{Components(item)}</div>
+              <div className="grid-item">{constructComponent(item)}</div>
             </DroppableElement>
           );
         })}

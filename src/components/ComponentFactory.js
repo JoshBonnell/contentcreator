@@ -5,34 +5,7 @@ import Image from "./Image";
 import Header from "./Header";
 import UndefinedElement from "./UndefinedElement";
 
-export const Blah = {
-  header: {
-    type: Header,
-    defaults: {
-      props: {
-        text: "My Header",
-      },
-    },
-  },
-  image: {
-    type: Image,
-    defaults: {
-      props: {
-        src: `https://source.unsplash.com/random/150x150?t=1234`,
-        alt: "Alt Text",
-      },
-    },
-  },
-  flipcard: {
-    type: FlipCard,
-    validChildComponents: [Image],
-  },
-  columnlayout: {
-    type: ColumnLayout,
-  },
-};
-
-const Components = {
+export const Components = {
   header: {
     type: Header,
     defaults: {
@@ -100,7 +73,7 @@ const getProps = (item) => {
   return props;
 };
 
-export default (item) => {
+export const constructComponent = (item) => {
   if (
     Components[item.component] &&
     typeof Components[item.component].type !== "undefined"
