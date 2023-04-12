@@ -3,12 +3,6 @@ import React, { useState, useEffect } from "react";
 const ItemEditor = (props) => {
   const [item, setItem] = useState(props.item);
 
-  // useEffect(() => {
-  //   if (item) {
-  //     console.log(item);
-  //   }
-  // }, []);
-
   const handleTextChange = (e) => {
     // console.log( e.target.value );
     let temp = { ...props.item };

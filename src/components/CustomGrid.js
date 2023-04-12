@@ -16,7 +16,7 @@ const CustomGrid = React.forwardRef(
         newItems.splice(dropTargetIndex, 0, {
           _uid: uuid(),
           component: insertType,
-          props: Components[insertType].defaults.props,
+          props: { ...Components[insertType].defaults.props },
         });
         setItems(newItems);
       }

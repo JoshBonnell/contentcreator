@@ -11,15 +11,17 @@ const PageBuilder = () => {
   const [itemToEdit, setItemToEdit] = useState(null);
 
   const handleGridItemClick = (item) => {
+    console.log(item);
     setItemToEdit(item);
   };
 
   const handleSaveChanges = (updatedItem) => {
-    console.log(updatedItem);
-    setItems(
-      items.map((item) => (item._uid === updatedItem._uid ? updatedItem : item))
-    );
-
+    // items.map((item) => {
+    //   console.log(item);
+    // });
+    // setItems(
+    //   items.map((item) => (item._uid === updatedItem._uid ? updatedItem : item))
+    // );
     setItemToEdit(null);
   };
 
