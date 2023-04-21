@@ -16,12 +16,9 @@ const PageBuilder = () => {
   };
 
   const handleSaveChanges = (updatedItem) => {
-    // items.map((item) => {
-    //   console.log(item);
-    // });
-    // setItems(
-    //   items.map((item) => (item._uid === updatedItem._uid ? updatedItem : item))
-    // );
+    setItems(
+      items.map((item) => (item._uid === updatedItem._uid ? updatedItem : item))
+    );
     setItemToEdit(null);
   };
 
